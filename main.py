@@ -1,10 +1,9 @@
 import random, os, re
 historial = []
-num_op = 1
 aciertos = []
 ejerciciosRespondidos = []
 
-def resultados(eleccion1, eleccion2, str_original,numDecimal, numeroConvertido, historial, num_op):
+def resultados(eleccion1, eleccion2, str_original,numDecimal, numeroConvertido, historial):
     print("==================================")
     print("RESULTADO")
     print("==================================")
@@ -32,17 +31,18 @@ def resultados(eleccion1, eleccion2, str_original,numDecimal, numeroConvertido, 
                 case "HEXADECIMAL":
                     valor_hex_dec = ""
                     match char:
-                        case "A": valor_hex_dec = "10"
-                        case "B": valor_hex_dec = "11"
-                        case "C": valor_hex_dec = "12"
-                        case "D": valor_hex_dec = "13"
-                        case "E": valor_hex_dec = "14"
-                        case "F": valor_hex_dec = "15"
+                        case "A" | "a": valor_hex_dec = "10"
+                        case "B" | "b": valor_hex_dec = "11"
+                        case "C" | "c": valor_hex_dec = "12"
+                        case "D" | "d": valor_hex_dec = "13"
+                        case "E" | "e": valor_hex_dec = "14"
+                        case "F" | "f": valor_hex_dec = "15"
                         case _: valor_hex_dec = str(char)
                     print(f"{char} (valor {str(valor_hex_dec)}) X 16^{i} = {str(int(valor_hex_dec)*(16**int(i)))}")           
         print(f"Suma de los aportes: {str(numDecimal)}")
         etapa = etapa + 1
     print("")
+    
     if destino != "DECIMAL":
         print(f"ETAPA: {etapa} DECIMAL A {destino}")
         cociente = int(numDecimal)
@@ -150,7 +150,7 @@ def limpiar():
     else:
         os.system("clear")
 
-def tenerNum(eleccion1, eleccion2, historial, num_op):
+def tenerNum(eleccion1, eleccion2, historial):
     saltar = 0 
     limpiar()
     while True:
@@ -190,7 +190,7 @@ def tenerNum(eleccion1, eleccion2, historial, num_op):
                         print("Solo números del 0 al 9 están permitidos, intente de nuevo.")
                     else: break
                 case "HEXADECIMAL":
-                    if not re.match("[A-Fa-f0-9]+",numInput):
+                    if not set(numInput).issubset({'0', '1', '2','3','4','5','6','7','8','9','a','b','c','d','e','f','A','B','C','D','E','F'}):
                         limpiar()
                         print("Solo números y letras entre el 0-9, letras A-F y a-f están permitidos, intente de nuevo.")
                     else: break
@@ -202,7 +202,7 @@ def tenerNum(eleccion1, eleccion2, historial, num_op):
             numeroConvertido = str("".join(reversed(numeroConvertido)))
         else: numeroConvertido = numDecimal
         
-        resultados(eleccion1, eleccion2, str_original, numDecimal, numeroConvertido, historial, num_op)
+        resultados(eleccion1, eleccion2, str_original, numDecimal, numeroConvertido, historial)
 
 def realizarConversion():
     volver = 0 
@@ -296,7 +296,7 @@ def realizarConversion():
                 limpiar()
                 print("Seleccione de nuevo un número de las opciones mostradas.")
     if volver == 0:
-        tenerNum(eleccion1, eleccion2, historial, num_op)
+        tenerNum(eleccion1, eleccion2, historial)
     
 def mostrarHistorial():
     while True:
@@ -415,22 +415,46 @@ def modoPractica(aciertos,ejerciciosRespondidos):
                             if not set(respuesta).issubset({'0', '1'}):
                                 limpiar()
                                 print("Solo 0 y 1 están permitidos, intente de nuevo.")
-                            else: break
+                            else: 
+                                if respuesta == "":
+                                    limpiar()
+                                    print("No deje la respuesta vacía, intente de nuevo.")
+                                else:  
+                                    break
                         case "OCTAL":
                             if not set(respuesta).issubset({'0', '1', '2','3','4','5','6','7'}):
                                 limpiar()
                                 print("Solo números del 0 al 7 están permitidos, intente de nuevo.")
-                            else: break
+                            else: 
+                                if respuesta == "":
+                                    limpiar()
+                                    print("No deje la respuesta vacía, intente de nuevo.")
+                                else:  
+                                    break
                         case "DECIMAL":
                             if not set(respuesta).issubset({'0', '1', '2','3','4','5','6','7','8','9'}):
                                 limpiar()
                                 print("Solo números del 0 al 9 están permitidos, intente de nuevo.")
-                            else: break
+                            else: 
+                                if respuesta == "":
+                                    limpiar()
+                                    print("No deje la respuesta vacía, intente de nuevo.")
+                                else:  
+                                    break
                         case "HEXADECIMAL":
-                            if not re.match("[A-Fa-f0-9]+",respuesta):
+                            if not set(respuesta).issubset({'0', '1', '2','3','4','5','6','7','8','9','a','b','c','d','e','f','A','B','C','D','E','F'}):
                                 limpiar()
                                 print("Solo números y letras entre el 0-9, letras A-F y a-f están permitidos, intente de nuevo.")
-                            else: break
+                            else: 
+                                if respuesta == "":
+                                    limpiar()
+                                    print("No deje la respuesta vacía, intente de nuevo.")
+                                else:  
+                                    break
+                
+                if destino_num == "BINARIO":
+                    if respuesta[0] == "0":
+                        respuesta = respuesta[1:] 
                 
                 if respuesta.upper() == num_random_destino:
                     print("Respuesta correcta!")
@@ -443,6 +467,7 @@ def modoPractica(aciertos,ejerciciosRespondidos):
                 print(f"Porcentaje de aciertos: {str("%.2f" % ((aciertos.count(1)/ejerciciosRespondidos.count(1))*100))}%")
                 print("")
                 input("Presione enter para continuar...")
+                limpiar()
             case "2":
                  while True:
                         op = input("¿Está seguro? (1 = Si / 0 = No) ")
@@ -453,6 +478,7 @@ def modoPractica(aciertos,ejerciciosRespondidos):
                             case "1":
                                 aciertos.clear()
                                 ejerciciosRespondidos.clear()
+                                limpiar()
                                 break
                             case _:
                                 print("Escriba 1 para sí o 0 para no.")
