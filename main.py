@@ -76,6 +76,7 @@ def resultados(eleccion1, eleccion2, str_original,numDecimal, numeroConvertido, 
     print("")
     input("Presione Enter para continuar...")
     historial.append(f"Entrada: {str(str_original)} Origen: {base} Destino: {destino} Resultado: {numeroConvertido}")
+    limpiar()
 
 def convEleccion2(numDecimal, eleccion2):
     match eleccion2:
@@ -324,7 +325,7 @@ def mostrarHistorial():
                     while True:
                         op_del = input("Escriba el número de registro a borrar (0 si cancelar): ")
                         while not op_del.isnumeric():
-                            print("Escriba de nuevo.")
+                            print("Escriba el número que aparece en las opciones.")
                             op_del = input("Escriba el número de registro a borrar (0 si cancelar): ")
                         op_del = int(op_del)
                         if op_del > 0 and op_del <= len(historial):
@@ -357,6 +358,7 @@ def mostrarHistorial():
                 case "4":
                     print(len(historial))
                 case _:
+                    limpiar()
                     print("Seleccione de nuevo un número de las opciones mostradas.")
 
 
@@ -463,7 +465,6 @@ def modoPractica(aciertos,ejerciciosRespondidos):
 
 
 while True:
-    limpiar()
     print("==================================================")
     print("CONVERSOR DE SISTEMAS NUMÉRICOS")
     print("==================================================")
