@@ -1,4 +1,4 @@
-import random, os, re
+import random, os
 historial = []
 aciertos = []
 ejerciciosRespondidos = []
@@ -453,7 +453,7 @@ def modoPractica(aciertos,ejerciciosRespondidos):
                                     break
                 
                 if destino_num == "BINARIO":
-                    if respuesta[0] == "0":
+                    while respuesta[0] == "0":
                         respuesta = respuesta[1:] 
                 
                 if respuesta.upper() == num_random_destino:
