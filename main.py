@@ -20,15 +20,12 @@ while True:
     op = input("Seleccione una opción: ")
     match op:
         case "1":
-            #print("op1")
             limpiar()
             realizarConversion.realizarConversion(historial, limpiar, convEleccion2)
         case "2":
-            #print("op2")
             limpiar()
             historialC.mostrarHistorial(historial,limpiar)
         case "3":
-            #print("op3")
             limpiar()
             practica.modoPractica(aciertos, ejerciciosRespondidos, historial, limpiar, random, convEleccion2)
         case "4":
