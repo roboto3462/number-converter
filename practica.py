@@ -29,13 +29,18 @@ def modoPractica(aciertos, ejerciciosRespondidos, historial, limpiar, random, co
                     destino_num=bases[random.randint(0,3)]
                 
                 num_random_decimal = random.randint(0,255)
+                # num_random_decimal = 0
 
-                if not base_num == "DECIMAL":
-                    num_random_base = str("".join(reversed(convEleccion2.convEleccion2(str(num_random_decimal),base_num))))
-                else: num_random_base = str(num_random_decimal)
-                if not destino_num == "DECIMAL":
-                    num_random_destino = str("".join(reversed(convEleccion2.convEleccion2(str(num_random_decimal),destino_num))))
-                else: num_random_destino = str(num_random_decimal)
+                if num_random_decimal != 0 :
+                    if not base_num == "DECIMAL":
+                        num_random_base = str("".join(reversed(convEleccion2.convEleccion2(str(num_random_decimal),base_num))))
+                    else: num_random_base = str(num_random_decimal)
+                    if not destino_num == "DECIMAL":
+                        num_random_destino = str("".join(reversed(convEleccion2.convEleccion2(str(num_random_decimal),destino_num))))
+                    else: num_random_destino = str(num_random_decimal)
+                else: 
+                    num_random_base = "0" 
+                    num_random_destino = "0"
                 
                 limpiar() 
                 while True:
@@ -88,9 +93,13 @@ def modoPractica(aciertos, ejerciciosRespondidos, historial, limpiar, random, co
                                 else:  
                                     break
                 
-                if destino_num == "BINARIO":
-                    while respuesta[0] == "0":
-                        respuesta = respuesta[1:] 
+                if len(respuesta) > 1:
+                    stop = 0
+                    while respuesta[0] == "0" and stop == 0:
+                        if len(respuesta) == 1: 
+                            stop = 1
+                        else: respuesta = respuesta[1:]
+                        print(respuesta)
                 
                 if respuesta.upper() == num_random_destino:
                     print("Respuesta correcta!")
