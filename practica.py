@@ -99,7 +99,6 @@ def modoPractica(aciertos, ejerciciosRespondidos, historial, limpiar, random, co
                         if len(respuesta) == 1: 
                             stop = 1
                         else: respuesta = respuesta[1:]
-                        print(respuesta)
                 
                 if respuesta.upper() == num_random_destino:
                     print("Respuesta correcta!")
